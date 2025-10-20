@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="/logo.png" alt="نامەکان لۆگۆ" class="logo">
+        </header>
+
+        <main class="main-content">
+            
+            <div class="features">
+                <div class="feature-card">
+                    <h3 class="feature-title">کوردی سۆرانی</h3>
+                    <p class="feature-description">ماڵپەڕەکەمان بە زمانی کوردی سۆرانی نووسراوە و بە شێوەی RTL دەردەکەوێت</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 class="feature-title">دیزاینی جوان</h3>
+                    <p class="feature-description">دیزاینێکی مۆدێرن و جوان بەکاردەهێنین کە بۆ هەموو ئامێرەکان گونجاوە</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3 class="feature-title">خێرا و ئاسان</h3>
+                    <p class="feature-description">ماڵپەڕەکەمان خێرایە و بە ئاسانی دەتوانن بەکاری بهێنن</p>
+                </div>
+            </div>
+
+            <!-- Message Form Section -->
+            <div class="message-section">
+                <h3 class="message-title">نامە بنێرە</h3>
+                
+                <div class="message-composer">
+                    <!-- Message Preview -->
+                    <div class="message-preview-container">
+                        <div class="message-preview-card" id="messagePreview">
+                            <img src="/logo.png" alt="نامەکان لۆگۆ" class="message-logo">
+                            <div class="preview-receiver">بۆ: <span id="receiverPreview"></span></div>
+                            <div class="preview-date">ئەمڕۆ</div>
+                            <div class="preview-content">
+                                <div id="contentPreview">نامەکەت لێرە بنووسە...</div>
+                            </div>
+                            <div class="preview-meta">
+                                <span class="message-id">#id</span>
+                                <span>نامەکان</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Color Palette -->
+                    <div class="color-palette">
+                        <h4 class="palette-title">ڕەنگ هەڵبژاردن</h4>
+                        <div class="color-grid" id="colorGrid">
+                            <div class="color-swatch" data-color="#ffffff" style="background-color: #ffffff;"></div>
+                            <div class="color-swatch" data-color="#f8f9fa" style="background-color: #f8f9fa;"></div>
+                            <div class="color-swatch" data-color="#e9ecef" style="background-color: #e9ecef;"></div>
+                            <div class="color-swatch" data-color="#dee2e6" style="background-color: #dee2e6;"></div>
+                            <div class="color-swatch" data-color="#ced4da" style="background-color: #ced4da;"></div>
+                            <div class="color-swatch" data-color="#adb5bd" style="background-color: #adb5bd;"></div>
+                            <div class="color-swatch" data-color="#6c757d" style="background-color: #6c757d;"></div>
+                            <div class="color-swatch" data-color="#495057" style="background-color: #495057;"></div>
+                            <div class="color-swatch" data-color="#343a40" style="background-color: #343a40;"></div>
+                            <div class="color-swatch" data-color="#212529" style="background-color: #212529;"></div>
+                            <div class="color-swatch" data-color="#fff3cd" style="background-color: #fff3cd;"></div>
+                            <div class="color-swatch" data-color="#ffeaa7" style="background-color: #ffeaa7;"></div>
+                            <div class="color-swatch" data-color="#fdcb6e" style="background-color: #fdcb6e;"></div>
+                            <div class="color-swatch" data-color="#e17055" style="background-color: #e17055;"></div>
+                            <div class="color-swatch" data-color="#d63031" style="background-color: #d63031;"></div>
+                            <div class="color-swatch" data-color="#e8f4fd" style="background-color: #e8f4fd;"></div>
+                            <div class="color-swatch" data-color="#74b9ff" style="background-color: #74b9ff;"></div>
+                            <div class="color-swatch" data-color="#0984e3" style="background-color: #0984e3;"></div>
+                            <div class="color-swatch" data-color="#2d3436" style="background-color: #2d3436;"></div>
+                            <div class="color-swatch" data-color="#636e72" style="background-color: #636e72;"></div>
+                            <div class="color-swatch" data-color="#f0f8e8" style="background-color: #f0f8e8;"></div>
+                            <div class="color-swatch" data-color="#a8e6cf" style="background-color: #a8e6cf;"></div>
+                            <div class="color-swatch" data-color="#00b894" style="background-color: #00b894;"></div>
+                            <div class="color-swatch" data-color="#00cec9" style="background-color: #00cec9;"></div>
+                            <div class="color-swatch" data-color="#55a3ff" style="background-color: #55a3ff;"></div>
+                            <div class="color-swatch" data-color="#f3e5f5" style="background-color: #f3e5f5;"></div>
+                            <div class="color-swatch" data-color="#dda0dd" style="background-color: #dda0dd;"></div>
+                            <div class="color-swatch" data-color="#9b59b6" style="background-color: #9b59b6;"></div>
+                            <div class="color-swatch" data-color="#6c5ce7" style="background-color: #6c5ce7;"></div>
+                            <div class="color-swatch" data-color="#fd79a8" style="background-color: #fd79a8;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Input Fields -->
+                    <div class="input-fields">
+                        <div class="input-group">
+                            <label for="receiverName" class="input-label">ناوی وەرگر</label>
+                            <input type="text" id="receiverName" name="receiverName" class="input-field" placeholder="ناوی وەرگر بنووسە" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="content" class="input-label">ناوەڕۆکی نامە</label>
+                            <textarea id="content" name="content" class="input-textarea" placeholder="نامەکەت لێرە بنووسە" required></textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <form id="messageForm" style="display: none;">
+                    <input type="hidden" id="backgroundColor" name="backgroundColor" value="#ffffff">
+                </form>
+                
+                <button type="button" id="submitMessage" class="submit-message-btn">نامەکەت بنێرە</button>
+                
+                <div id="messageStatus" class="message-status"></div>
+            </div>
+
+            <!-- Messages Display Section -->
+            <div class="messages-section">
+                <h3 class="messages-title">نامە نێردراوەکان</h3>
+                <div id="messagesContainer">
+                    <div class="loading-messages">نامەکان دەگەڕێنرێنەوە...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Color selection functionality
+        const colorSwatches = document.querySelectorAll('.color-swatch');
+        const backgroundColorInput = document.getElementById('backgroundColor');
+        const messagePreview = document.getElementById('messagePreview');
+        
+        // Initialize with first color selected
+        colorSwatches[0].classList.add('selected');
+        
+        colorSwatches.forEach(swatch => {
+            swatch.addEventListener('click', function() {
+                // Remove selected class from all swatches
+                colorSwatches.forEach(s => s.classList.remove('selected'));
+                
+                // Add selected class to clicked swatch
+                this.classList.add('selected');
+                
+                // Update background color
+                const selectedColor = this.dataset.color;
+                backgroundColorInput.value = selectedColor;
+                messagePreview.style.backgroundColor = selectedColor;
+            });
+        });
+
+        // Live preview updates
+        const receiverNameInput = document.getElementById('receiverName');
+        const contentInput = document.getElementById('content');
+        const receiverPreview = document.getElementById('receiverPreview');
+        const contentPreview = document.getElementById('contentPreview');
+
+        receiverNameInput.addEventListener('input', function() {
+            const value = this.value.trim();
+            receiverPreview.textContent = value || 'ناوی وەرگر بنووسە';
+        });
+
+        contentInput.addEventListener('input', function() {
+            const value = this.value.trim();
+            contentPreview.textContent = value || 'نامەکەت لێرە بنووسە';
+        });
+
+        // Submit message functionality
+        document.getElementById('submitMessage').addEventListener('click', async function() {
+            const receiverName = document.getElementById('receiverName').value.trim();
+            const content = document.getElementById('content').value.trim();
+            const backgroundColor = backgroundColorInput.value;
+            
+            const statusDiv = document.getElementById('messageStatus');
+            const submitBtn = this;
+            
+            // Validate input
+            if (!receiverName || !content) {
+                statusDiv.innerHTML = '<div class="error-message">❌ ناوی وەرگر و ناوەڕۆکی نامە پێویستە</div>';
+                return;
+            }
+            
+            // Show loading state
+            submitBtn.textContent = 'دەنێردرێت...';
+            submitBtn.disabled = true;
+            statusDiv.innerHTML = '';
+            
+            try {
+                const response = await fetch('/api/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        receiverName: receiverName,
+                        content: content,
+                        backgroundColor: backgroundColor
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusDiv.innerHTML = '<div class="success-message">✅ ' + result.message + '</div>';
+                    
+                    // Clear the form
+                    document.getElementById('receiverName').value = '';
+                    document.getElementById('content').value = '';
+                    
+                    // Reset preview
+                    receiverPreview.textContent = 'ناوی وەرگر بنووسە';
+                    contentPreview.textContent = 'نامەکەت لێرە بنووسە';
+                    
+                    // Reset to default color
+                    colorSwatches.forEach(s => s.classList.remove('selected'));
+                    colorSwatches[0].classList.add('selected');
+                    backgroundColorInput.value = '#ffffff';
+                    messagePreview.style.backgroundColor = '#ffffff';
+                    
+                } else {
+                    statusDiv.innerHTML = '<div class="error-message">❌ ' + result.message + '</div>';
+                }
+                
+            } catch (error) {
+                statusDiv.innerHTML = '<div class="error-message">❌ هەڵەیەک ڕوویدا لە ناردنی نامەدا</div>';
+            } finally {
+                // Reset button state
+                submitBtn.textContent = 'Submit Your Message';
+                submitBtn.disabled = false;
+                
+                // Reload messages after successful submission
+                if (result && result.success) {
+                    loadMessages();
+                }
+            }
+        });
+
+        // Function to format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { 
+                year: 'numeric', 
+                month: 'numeric', 
+                day: 'numeric',
+                weekday: 'long'
+            };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        // Function to load and display messages
+        async function loadMessages() {
+            const container = document.getElementById('messagesContainer');
+            
+            try {
+                const response = await fetch('/api/messages');
+                const result = await response.json();
+                
+                if (result.success && result.data.length > 0) {
+                    const messagesHtml = result.data.map(message => `
+                        <div class="message-card" style="background-color: ${message.backgroundColor || '#ffffff'};">
+                            <img src="/logo.png" alt="نامەکان لۆگۆ" class="message-logo">
+                            <div class="message-receiver">بۆ: ${message.receiverName}</div>
+                            <div class="message-date">${formatDate(message.createdAt)}</div>
+                            <div class="message-content">${message.content}</div>
+                            <div class="message-meta">
+                                <span class="message-id">#${message._id.slice(-6)}</span>
+                                <span>نامەکان</span>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    container.innerHTML = `<div class="messages-grid">${messagesHtml}</div>`;
+                } else {
+                    container.innerHTML = '<div class="no-messages">هێشتا هیچ نامەیەک نەنێردراوە</div>';
+                }
+                
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                container.innerHTML = '<div class="no-messages">هەڵەیەک ڕوویدا لە گەڕاندنەوەی نامەکاندا</div>';
+            }
+        }
+
+        // Load messages when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMessages();
+        });
+    </script>
+</body>
+</html>
