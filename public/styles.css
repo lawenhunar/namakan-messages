@@ -1,3 +1,32 @@
+/* Font Face Declarations */
+@font-face {
+    font-family: 'Noto Nastaliq Urdu';
+    src: url('./fonts/Noto Nastaliq Urdo v4.000/TTF/NotoNastaliqUrdu-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Noto Nastaliq Urdu';
+    src: url('./fonts/Noto Nastaliq Urdo v4.000/TTF/NotoNastaliqUrdu-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'The Bustani';
+    src: url('./fonts/The Bustani_ typeface/Monotype  - Bustani.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Font selection variable - change 'noto' to 'bustani' to switch fonts */
+:root {
+    /* --message-font: 'Noto Nastaliq Urdu', 'Georgia', serif; */
+    /* Uncomment the line below and comment the line above to try The Bustani font */
+    --message-font: 'The Bustani', 'Georgia', serif;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -203,7 +232,7 @@ body {
     font-size: 1rem;
     line-height: 1.6;
     color: #34495e;
-    font-family: 'Georgia', serif;
+    font-family: var(--message-font);
     text-align: justify;
     margin-bottom: 15px;
 }
@@ -530,7 +559,7 @@ body {
     font-size: 1rem;
     line-height: 1.6;
     color: #34495e;
-    font-family: 'Georgia', serif;
+    font-family: var(--message-font);
     text-align: justify;
     margin-bottom: 15px;
 }
