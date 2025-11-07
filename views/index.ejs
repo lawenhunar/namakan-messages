@@ -17,7 +17,7 @@
             <div class="features">
                 <div class="feature-card">
                     <h3 class="feature-title">کوردی سۆرانی</h3>
-                    <p class="feature-description">ماڵپەڕەکەمان بە زمانی کوردی سۆرانی نووسراوە و بە شێوەی RTL دەردەکەوێت</p>
+                    <p class="feature-description">ماڵپەرەکەمان بە زمانی کوردی سۆرانی نووسراوە و بە شێوەی RTL دەردەکەوێت</p>
                 </div>
                 
                 <div class="feature-card">
@@ -27,7 +27,7 @@
                 
                 <div class="feature-card">
                     <h3 class="feature-title">خێرا و ئاسان</h3>
-                    <p class="feature-description">ماڵپەڕەکەمان خێرایە و بە ئاسانی دەتوانن بەکاری بهێنن</p>
+                    <p class="feature-description">ماڵپەرەکەمان خێرایە و بە ئاسانی دەتوانن بەکاری بهێنن</p>
                 </div>
             </div>
 
@@ -39,14 +39,12 @@
                     <!-- Message Preview -->
                     <div class="message-preview-container">
                         <div class="message-preview-card" id="messagePreview">
-                            <img src="/logo.png" alt="نامەکان لۆگۆ" class="message-logo">
                             <div class="preview-receiver">بۆ: <span id="receiverPreview"></span></div>
-                            <div class="preview-date">ئەمڕۆ</div>
                             <div class="preview-content">
                                 <div id="contentPreview">نامەکەت لێرە بنووسە...</div>
                             </div>
                             <div class="preview-meta">
-                                <span class="message-id">#id</span>
+                                <span class="preview-date" id="previewDate">ئەمرۆ</span>
                                 <span>نامەکان</span>
                             </div>
                         </div>
@@ -54,38 +52,20 @@
                     
                     <!-- Color Palette -->
                     <div class="color-palette">
-                        <h4 class="palette-title">ڕەنگ هەڵبژاردن</h4>
+                        <h4 class="palette-title">رەنگ هەڵبژاردن</h4>
                         <div class="color-grid" id="colorGrid">
                             <div class="color-swatch" data-color="#ffffff" style="background-color: #ffffff;"></div>
-                            <div class="color-swatch" data-color="#f8f9fa" style="background-color: #f8f9fa;"></div>
-                            <div class="color-swatch" data-color="#e9ecef" style="background-color: #e9ecef;"></div>
-                            <div class="color-swatch" data-color="#dee2e6" style="background-color: #dee2e6;"></div>
-                            <div class="color-swatch" data-color="#ced4da" style="background-color: #ced4da;"></div>
-                            <div class="color-swatch" data-color="#adb5bd" style="background-color: #adb5bd;"></div>
-                            <div class="color-swatch" data-color="#6c757d" style="background-color: #6c757d;"></div>
-                            <div class="color-swatch" data-color="#495057" style="background-color: #495057;"></div>
-                            <div class="color-swatch" data-color="#343a40" style="background-color: #343a40;"></div>
-                            <div class="color-swatch" data-color="#212529" style="background-color: #212529;"></div>
+                            <div class="color-swatch" data-color="#faf8f5" style="background-color: #faf8f5;"></div>
+                            <div class="color-swatch" data-color="#fef7f0" style="background-color: #fef7f0;"></div>
+                            <div class="color-swatch" data-color="#f5f0f8" style="background-color: #f5f0f8;"></div>
+                            <div class="color-swatch" data-color="#f0f8f5" style="background-color: #f0f8f5;"></div>
+                            <div class="color-swatch" data-color="#fff8f0" style="background-color: #fff8f0;"></div>
+                            <div class="color-swatch" data-color="#faf0f5" style="background-color: #faf0f5;"></div>
                             <div class="color-swatch" data-color="#fff3cd" style="background-color: #fff3cd;"></div>
-                            <div class="color-swatch" data-color="#ffeaa7" style="background-color: #ffeaa7;"></div>
-                            <div class="color-swatch" data-color="#fdcb6e" style="background-color: #fdcb6e;"></div>
-                            <div class="color-swatch" data-color="#e17055" style="background-color: #e17055;"></div>
-                            <div class="color-swatch" data-color="#d63031" style="background-color: #d63031;"></div>
-                            <div class="color-swatch" data-color="#e8f4fd" style="background-color: #e8f4fd;"></div>
-                            <div class="color-swatch" data-color="#74b9ff" style="background-color: #74b9ff;"></div>
-                            <div class="color-swatch" data-color="#0984e3" style="background-color: #0984e3;"></div>
-                            <div class="color-swatch" data-color="#2d3436" style="background-color: #2d3436;"></div>
-                            <div class="color-swatch" data-color="#636e72" style="background-color: #636e72;"></div>
                             <div class="color-swatch" data-color="#f0f8e8" style="background-color: #f0f8e8;"></div>
-                            <div class="color-swatch" data-color="#a8e6cf" style="background-color: #a8e6cf;"></div>
-                            <div class="color-swatch" data-color="#00b894" style="background-color: #00b894;"></div>
-                            <div class="color-swatch" data-color="#00cec9" style="background-color: #00cec9;"></div>
-                            <div class="color-swatch" data-color="#55a3ff" style="background-color: #55a3ff;"></div>
+                            <div class="color-swatch" data-color="#e8f4fd" style="background-color: #e8f4fd;"></div>
                             <div class="color-swatch" data-color="#f3e5f5" style="background-color: #f3e5f5;"></div>
-                            <div class="color-swatch" data-color="#dda0dd" style="background-color: #dda0dd;"></div>
-                            <div class="color-swatch" data-color="#9b59b6" style="background-color: #9b59b6;"></div>
-                            <div class="color-swatch" data-color="#6c5ce7" style="background-color: #6c5ce7;"></div>
-                            <div class="color-swatch" data-color="#fd79a8" style="background-color: #fd79a8;"></div>
+                            <div class="color-swatch" data-color="#e9ecef" style="background-color: #e9ecef;"></div>
                         </div>
                     </div>
                     
@@ -97,14 +77,14 @@
                         </div>
                         
                         <div class="input-group">
-                            <label for="content" class="input-label">ناوەڕۆکی نامە</label>
+                            <label for="content" class="input-label">ناوەرۆکی نامە</label>
                             <textarea id="content" name="content" class="input-textarea" placeholder="نامەکەت لێرە بنووسە" required></textarea>
                         </div>
                     </div>
                 </div>
                 
                 <form id="messageForm" style="display: none;">
-                    <input type="hidden" id="backgroundColor" name="backgroundColor" value="#ffffff">
+                    <input type="hidden" id="backgroundColor" name="backgroundColor" value="#faf8f5">
                 </form>
                 
                 <button type="button" id="submitMessage" class="submit-message-btn">نامەکەت بنێرە</button>
@@ -116,7 +96,7 @@
             <div class="messages-section">
                 <h3 class="messages-title">نامە نێردراوەکان</h3>
                 <div id="messagesContainer">
-                    <div class="loading-messages">نامەکان دەگەڕێنرێنەوە...</div>
+                    <div class="loading-messages">نامەکان دەگەرێنرێنەوە...</div>
                 </div>
             </div>
         </main>
@@ -133,13 +113,32 @@
     </footer>
 
     <script>
+        // Function to convert English numbers to Kurdish/Arabic numbers
+        function toArabicNumerals(str) {
+            const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return str.replace(/\d/g, (digit) => arabicNumerals[parseInt(digit)]);
+        }
+
+        // Function to format date with Kurdish/Arabic numerals in day/month/year format
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            // Format: day/month/year (e.g., "٢٢/٥/٢٠٢٥")
+            const formattedDate = `${day}/${month}/${year}`;
+            return toArabicNumerals(formattedDate);
+        }
+
         // Color selection functionality
         const colorSwatches = document.querySelectorAll('.color-swatch');
         const backgroundColorInput = document.getElementById('backgroundColor');
         const messagePreview = document.getElementById('messagePreview');
         
-        // Initialize with first color selected
-        colorSwatches[0].classList.add('selected');
+        // Initialize with second color (faf8f5) selected as default
+        colorSwatches[1].classList.add('selected');
+        messagePreview.style.backgroundColor = '#faf8f5';
         
         colorSwatches.forEach(swatch => {
             swatch.addEventListener('click', function() {
@@ -155,6 +154,10 @@
                 messagePreview.style.backgroundColor = selectedColor;
             });
         });
+
+        // Update preview date to today
+        const previewDate = document.getElementById('previewDate');
+        previewDate.textContent = formatDate(new Date().toISOString());
 
         // Live preview updates
         const receiverNameInput = document.getElementById('receiverName');
@@ -183,7 +186,7 @@
             
             // Validate input
             if (!receiverName || !content) {
-                statusDiv.innerHTML = '<div class="error-message">❌ ناوی وەرگر و ناوەڕۆکی نامە پێویستە</div>';
+                statusDiv.innerHTML = '<div class="error-message">❌ ناوی وەرگر و ناوەرۆکی نامە پێویستە</div>';
                 return;
             }
             
@@ -220,16 +223,16 @@
                     
                     // Reset to default color
                     colorSwatches.forEach(s => s.classList.remove('selected'));
-                    colorSwatches[0].classList.add('selected');
-                    backgroundColorInput.value = '#ffffff';
-                    messagePreview.style.backgroundColor = '#ffffff';
+                    colorSwatches[1].classList.add('selected');
+                    backgroundColorInput.value = '#faf8f5';
+                    messagePreview.style.backgroundColor = '#faf8f5';
                     
                 } else {
                     statusDiv.innerHTML = '<div class="error-message">❌ ' + result.message + '</div>';
                 }
                 
             } catch (error) {
-                statusDiv.innerHTML = '<div class="error-message">❌ هەڵەیەک ڕوویدا لە ناردنی نامەدا</div>';
+                statusDiv.innerHTML = '<div class="error-message">❌ هەڵەیەک روویدا لە ناردنی نامەدا</div>';
             } finally {
                 // Reset button state
                 submitBtn.textContent = 'Submit Your Message';
@@ -242,18 +245,6 @@
             }
         });
 
-        // Function to format date
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const options = { 
-                year: 'numeric', 
-                month: 'numeric', 
-                day: 'numeric',
-                weekday: 'long'
-            };
-            return date.toLocaleDateString('en-US', options);
-        }
-
         // Function to load and display messages
         async function loadMessages() {
             const container = document.getElementById('messagesContainer');
@@ -264,13 +255,11 @@
                 
                 if (result.success && result.data.length > 0) {
                     const messagesHtml = result.data.map(message => `
-                        <div class="message-card" style="background-color: ${message.backgroundColor || '#ffffff'};">
-                            <img src="/logo.png" alt="نامەکان لۆگۆ" class="message-logo">
+                        <div class="message-card" style="background-color: ${message.backgroundColor || '#faf8f5'};">
                             <div class="message-receiver">بۆ: ${message.receiverName}</div>
-                            <div class="message-date">${formatDate(message.createdAt)}</div>
                             <div class="message-content">${message.content}</div>
                             <div class="message-meta">
-                                <span class="message-id">#${message._id.slice(-6)}</span>
+                                <span class="message-date">${formatDate(message.createdAt)}</span>
                                 <span>نامەکان</span>
                             </div>
                         </div>
@@ -283,7 +272,7 @@
                 
             } catch (error) {
                 console.error('Error loading messages:', error);
-                container.innerHTML = '<div class="no-messages">هەڵەیەک ڕوویدا لە گەڕاندنەوەی نامەکاندا</div>';
+                container.innerHTML = '<div class="no-messages">هەڵەیەک روویدا لە گەراندنەوەی نامەکاندا</div>';
             }
         }
 
