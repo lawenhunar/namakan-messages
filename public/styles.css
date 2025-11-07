@@ -50,7 +50,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 20px 20px 40px;
     animation: fadeIn 1.2s ease-in;
 }
 
@@ -71,9 +71,9 @@ body {
     align-items: center;
     background: rgba(250, 245, 235, 0.85);
     backdrop-filter: blur(8px);
-    padding: 30px 45px;
+    padding: 25px 45px;
     border-bottom: 2px solid rgba(139, 90, 43, 0.15);
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     box-shadow: 0 3px 15px rgba(139, 90, 43, 0.08);
     transition: all 0.4s ease;
     position: relative;
@@ -134,21 +134,21 @@ body {
 
 .main-content {
     background: transparent;
-    padding: 20px 40px 50px;
+    padding: 0 40px 40px;
     text-align: center;
 }
 
 /* Poetic Header Styles */
 .poetic-header {
     text-align: center;
-    margin-bottom: 60px;
-    padding: 40px 20px;
+    margin-bottom: 40px;
+    padding: 20px 20px 30px;
 }
 
 .poetic-title {
     font-size: 2.5rem;
     color: #6b4423;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     font-weight: 500;
     letter-spacing: 0.08em;
     line-height: 1.6;
@@ -175,7 +175,7 @@ body {
     max-width: 800px;
     margin: 0 auto;
     font-style: italic;
-    padding-top: 20px;
+    padding-top: 15px;
 }
 
 /* About Page Styles */
@@ -189,12 +189,12 @@ body {
     font-size: 2.5rem;
     color: #6b4423;
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 45px;
     font-weight: 500;
     letter-spacing: 0.08em;
     text-shadow: 0 2px 4px rgba(255, 255, 255, 0.7);
     position: relative;
-    padding-bottom: 30px;
+    padding-bottom: 25px;
 }
 
 .about-title::before {
@@ -394,9 +394,9 @@ body {
 .message-section {
     background: rgba(250, 245, 235, 0.75);
     backdrop-filter: blur(10px);
-    padding: 55px;
+    padding: 45px;
     border-radius: 12px;
-    margin-top: 60px;
+    margin-top: 20px;
     border: 2px solid rgba(139, 90, 43, 0.25);
     box-shadow: 
         0 8px 25px rgba(139, 90, 43, 0.12),
@@ -418,12 +418,12 @@ body {
 .message-title {
     font-size: 2rem;
     color: #6b4423;
-    margin-bottom: 45px;
+    margin-bottom: 35px;
     text-align: center;
     font-weight: 500;
     letter-spacing: 0.08em;
     position: relative;
-    padding-bottom: 25px;
+    padding-bottom: 20px;
     text-shadow: 0 2px 4px rgba(255, 255, 255, 0.7);
 }
 
@@ -649,43 +649,49 @@ body {
 
 .palette-title {
     font-size: 1.1rem;
-    color: #333;
+    color: #6b4423;
     margin-bottom: 15px;
     text-align: center;
-    font-weight: bold;
+    font-weight: 500;
+    letter-spacing: 0.03em;
 }
 
 .color-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    padding: 15px;
-    background: #fff;
+    gap: 10px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
     border-radius: 10px;
-    border: 1px solid #ddd;
+    border: 2px solid rgba(139, 90, 43, 0.25);
     width: fit-content;
     margin: 0 auto;
+    box-shadow: 0 4px 12px rgba(139, 90, 43, 0.12);
 }
 
 .color-swatch {
-    width: 35px;
-    height: 35px;
-    border: 2px solid #000;
-    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(139, 90, 43, 0.3);
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .color-swatch:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transform: scale(1.15);
+    box-shadow: 0 4px 15px rgba(139, 90, 43, 0.35);
+    border-color: rgba(139, 90, 43, 0.5);
 }
 
 .color-swatch.selected {
-    border-color: #007bff;
+    border-color: #6b4423;
     border-width: 3px;
-    transform: scale(1.1);
+    transform: scale(1.15);
+    box-shadow: 0 4px 15px rgba(107, 68, 35, 0.4);
 }
 
 .color-swatch.selected::after {
@@ -694,9 +700,10 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #007bff;
+    color: #6b4423;
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
 }
 
 /* Submit Button */
@@ -816,8 +823,8 @@ body {
 
 /* Messages Display Section */
 .messages-section {
-    margin-top: 20px;
-    padding: 50px;
+    margin-top: 0;
+    padding: 20px 50px 50px;
     background: transparent;
 }
 
@@ -829,7 +836,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 25px;
-    margin-top: 30px;
+    margin-top: 0;
 }
 
 .message-card {
@@ -1018,8 +1025,8 @@ body {
 .footer {
     background: rgba(250, 245, 235, 0.7);
     backdrop-filter: blur(8px);
-    padding: 45px 0;
-    margin-top: 80px;
+    padding: 35px 0;
+    margin-top: 20px;
     text-align: center;
     border-top: 2px solid rgba(139, 90, 43, 0.2);
     position: relative;
@@ -1039,7 +1046,7 @@ body {
     width: 100px;
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(139, 90, 43, 0.5), transparent);
-    margin: 0 auto 35px;
+    margin: 0 auto 25px;
     position: relative;
 }
 

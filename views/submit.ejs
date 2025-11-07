@@ -41,18 +41,16 @@
                     <div class="color-palette">
                         <h4 class="palette-title">رەنگ هەڵبژاردن</h4>
                         <div class="color-grid" id="colorGrid">
-                            <div class="color-swatch" data-color="#ffffff" style="background-color: #ffffff;"></div>
                             <div class="color-swatch" data-color="#faf8f5" style="background-color: #faf8f5;"></div>
-                            <div class="color-swatch" data-color="#fef7f0" style="background-color: #fef7f0;"></div>
-                            <div class="color-swatch" data-color="#f5f0f8" style="background-color: #f5f0f8;"></div>
-                            <div class="color-swatch" data-color="#f0f8f5" style="background-color: #f0f8f5;"></div>
-                            <div class="color-swatch" data-color="#fff8f0" style="background-color: #fff8f0;"></div>
-                            <div class="color-swatch" data-color="#faf0f5" style="background-color: #faf0f5;"></div>
-                            <div class="color-swatch" data-color="#fff3cd" style="background-color: #fff3cd;"></div>
-                            <div class="color-swatch" data-color="#f0f8e8" style="background-color: #f0f8e8;"></div>
-                            <div class="color-swatch" data-color="#e8f4fd" style="background-color: #e8f4fd;"></div>
+                            <div class="color-swatch" data-color="#ffe4e1" style="background-color: #ffe4e1;"></div>
+                            <div class="color-swatch" data-color="#fff4e6" style="background-color: #fff4e6;"></div>
+                            <div class="color-swatch" data-color="#fff9c4" style="background-color: #fff9c4;"></div>
+                            <div class="color-swatch" data-color="#e8f5e9" style="background-color: #e8f5e9;"></div>
+                            <div class="color-swatch" data-color="#e0f2f1" style="background-color: #e0f2f1;"></div>
+                            <div class="color-swatch" data-color="#e3f2fd" style="background-color: #e3f2fd;"></div>
+                            <div class="color-swatch" data-color="#e8eaf6" style="background-color: #e8eaf6;"></div>
                             <div class="color-swatch" data-color="#f3e5f5" style="background-color: #f3e5f5;"></div>
-                            <div class="color-swatch" data-color="#e9ecef" style="background-color: #e9ecef;"></div>
+                            <div class="color-swatch" data-color="#fce4ec" style="background-color: #fce4ec;"></div>
                         </div>
                     </div>
                     
@@ -115,8 +113,8 @@
         const backgroundColorInput = document.getElementById('backgroundColor');
         const messagePreview = document.getElementById('messagePreview');
         
-        // Initialize with second color (faf8f5) selected as default
-        colorSwatches[1].classList.add('selected');
+        // Initialize with first color (faf8f5) selected as default
+        colorSwatches[0].classList.add('selected');
         messagePreview.style.backgroundColor = '#faf8f5';
         
         colorSwatches.forEach(swatch => {
@@ -202,7 +200,7 @@
                     
                     // Reset to default color
                     colorSwatches.forEach(s => s.classList.remove('selected'));
-                    colorSwatches[1].classList.add('selected');
+                    colorSwatches[0].classList.add('selected');
                     backgroundColorInput.value = '#faf8f5';
                     messagePreview.style.backgroundColor = '#faf8f5';
                     
