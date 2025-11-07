@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <img src="/logo.png" alt="نامەکان لۆگۆ" class="logo">
+            <nav class="nav">
+                <a href="/" class="nav-link active">سەرەتا</a>
+                <a href="/submit" class="nav-link">نامە بنێرە</a>
+                <a href="/about" class="nav-link">دەربارە</a>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <!-- Poetic Header -->
+            <div class="poetic-header">
+                <h1 class="poetic-title">نامە نەنێردراوەکان بۆ خۆشەویستەکانمان</h1>
+                <p class="poetic-subtitle">وشەکانێک کە لە دڵەوە هاتوون، بەڵام هەرگیز نەگەیشتوونەتە دەستی ئەوانەی کە بۆیان نووسراون</p>
+            </div>
+
+            <!-- Messages Display Section -->
+            <div class="messages-section">
+                <div id="messagesContainer">
+                    <div class="loading-messages">نامەکان دەگەرێنرێنەوە...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-divider"></div>
+        <div class="footer-logo">
+            <img src="/logo.png" alt="نامەکان لۆگۆ" class="footer-logo-img">
+        </div>
+        <div class="footer-link">
+            <a href="https://lawenhunar.github.io/portfolio/" target="_blank" class="portfolio-link">لاوێن هونەر</a>
+        </div>
+    </footer>
+
+    <script>
+        // Function to convert English numbers to Kurdish/Arabic numbers
+        function toArabicNumerals(str) {
+            const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return str.replace(/\d/g, (digit) => arabicNumerals[parseInt(digit)]);
+        }
+
+        // Function to format date with Kurdish/Arabic numerals in day/month/year format
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            
+            // Format: day/month/year (e.g., "٢٢/٥/٢٠٢٥")
+            const formattedDate = `${day}/${month}/${year}`;
+            return toArabicNumerals(formattedDate);
+        }
+
+        // Function to load and display messages
+        async function loadMessages() {
+            const container = document.getElementById('messagesContainer');
+            
+            try {
+                const response = await fetch('/api/messages');
+                const result = await response.json();
+                
+                if (result.success && result.data.length > 0) {
+                    const messagesHtml = result.data.map(message => `
+                        <div class="message-card" style="background-color: ${message.backgroundColor || '#faf8f5'};">
+                            <div class="message-receiver">بۆ: ${message.receiverName}</div>
+                            <div class="message-content">${message.content}</div>
+                            <div class="message-meta">
+                                <span class="message-date">${formatDate(message.createdAt)}</span>
+                                <span>نامەکان</span>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    container.innerHTML = `<div class="messages-grid">${messagesHtml}</div>`;
+                } else {
+                    container.innerHTML = '<div class="no-messages">هێشتا هیچ نامەیەک نەنێردراوە</div>';
+                }
+                
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                container.innerHTML = '<div class="no-messages">هەڵەیەک روویدا لە گەراندنەوەی نامەکاندا</div>';
+            }
+        }
+
+        // Load messages when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMessages();
+        });
+    </script>
+</body>
+</html>
+

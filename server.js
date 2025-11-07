@@ -48,9 +48,20 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get("/", (req, res) => {
-  res.render("index", {
-    title: "نامەکان - Namakan",
-    pageTitle: "سەرەکی - Home",
+  res.render("home", {
+    title: "نامەکان - سەرەتا",
+  });
+});
+
+app.get("/submit", (req, res) => {
+  res.render("submit", {
+    title: "نامەکان - نامە بنێرە",
+  });
+});
+
+app.get("/about", (req, res) => {
+  res.render("about", {
+    title: "نامەکان - دەربارە",
   });
 });
 

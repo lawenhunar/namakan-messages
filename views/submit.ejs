@@ -10,36 +10,23 @@
     <div class="container">
         <header class="header">
             <img src="/logo.png" alt="نامەکان لۆگۆ" class="logo">
+            <nav class="nav">
+                <a href="/" class="nav-link">سەرەتا</a>
+                <a href="/submit" class="nav-link active">نامە بنێرە</a>
+                <a href="/about" class="nav-link">دەربارە</a>
+            </nav>
         </header>
 
         <main class="main-content">
-            
-            <div class="features">
-                <div class="feature-card">
-                    <h3 class="feature-title">کوردی سۆرانی</h3>
-                    <p class="feature-description">ماڵپەرەکەمان بە زمانی کوردی سۆرانی نووسراوە و بە شێوەی RTL دەردەکەوێت</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3 class="feature-title">دیزاینی جوان</h3>
-                    <p class="feature-description">دیزاینێکی مۆدێرن و جوان بەکاردەهێنین کە بۆ هەموو ئامێرەکان گونجاوە</p>
-                </div>
-                
-                <div class="feature-card">
-                    <h3 class="feature-title">خێرا و ئاسان</h3>
-                    <p class="feature-description">ماڵپەرەکەمان خێرایە و بە ئاسانی دەتوانن بەکاری بهێنن</p>
-                </div>
-            </div>
-
             <!-- Message Form Section -->
             <div class="message-section">
-                <h3 class="message-title">نامە بنێرە</h3>
+                <h3 class="message-title">نامەکەت بنێرە</h3>
                 
                 <div class="message-composer">
                     <!-- Message Preview -->
                     <div class="message-preview-container">
                         <div class="message-preview-card" id="messagePreview">
-                            <div class="preview-receiver">بۆ: <span id="receiverPreview"></span></div>
+                            <div class="preview-receiver">بۆ: <span id="receiverPreview">ناوی وەرگر</span></div>
                             <div class="preview-content">
                                 <div id="contentPreview">نامەکەت لێرە بنووسە...</div>
                             </div>
@@ -90,14 +77,6 @@
                 <button type="button" id="submitMessage" class="submit-message-btn">نامەکەت بنێرە</button>
                 
                 <div id="messageStatus" class="message-status"></div>
-            </div>
-
-            <!-- Messages Display Section -->
-            <div class="messages-section">
-                <h3 class="messages-title">نامە نێردراوەکان</h3>
-                <div id="messagesContainer">
-                    <div class="loading-messages">نامەکان دەگەرێنرێنەوە...</div>
-                </div>
             </div>
         </main>
     </div>
@@ -167,12 +146,12 @@
 
         receiverNameInput.addEventListener('input', function() {
             const value = this.value.trim();
-            receiverPreview.textContent = value || 'ناوی وەرگر بنووسە';
+            receiverPreview.textContent = value || 'ناوی وەرگر';
         });
 
         contentInput.addEventListener('input', function() {
             const value = this.value.trim();
-            contentPreview.textContent = value || 'نامەکەت لێرە بنووسە';
+            contentPreview.textContent = value || 'نامەکەت لێرە بنووسە...';
         });
 
         // Submit message functionality
@@ -218,8 +197,8 @@
                     document.getElementById('content').value = '';
                     
                     // Reset preview
-                    receiverPreview.textContent = 'ناوی وەرگر بنووسە';
-                    contentPreview.textContent = 'نامەکەت لێرە بنووسە';
+                    receiverPreview.textContent = 'ناوی وەرگر';
+                    contentPreview.textContent = 'نامەکەت لێرە بنووسە...';
                     
                     // Reset to default color
                     colorSwatches.forEach(s => s.classList.remove('selected'));
@@ -235,51 +214,11 @@
                 statusDiv.innerHTML = '<div class="error-message">❌ هەڵەیەک روویدا لە ناردنی نامەدا</div>';
             } finally {
                 // Reset button state
-                submitBtn.textContent = 'Submit Your Message';
+                submitBtn.textContent = 'نامەکەت بنێرە';
                 submitBtn.disabled = false;
-                
-                // Reload messages after successful submission
-                if (result && result.success) {
-                    loadMessages();
-                }
             }
-        });
-
-        // Function to load and display messages
-        async function loadMessages() {
-            const container = document.getElementById('messagesContainer');
-            
-            try {
-                const response = await fetch('/api/messages');
-                const result = await response.json();
-                
-                if (result.success && result.data.length > 0) {
-                    const messagesHtml = result.data.map(message => `
-                        <div class="message-card" style="background-color: ${message.backgroundColor || '#faf8f5'};">
-                            <div class="message-receiver">بۆ: ${message.receiverName}</div>
-                            <div class="message-content">${message.content}</div>
-                            <div class="message-meta">
-                                <span class="message-date">${formatDate(message.createdAt)}</span>
-                                <span>نامەکان</span>
-                            </div>
-                        </div>
-                    `).join('');
-                    
-                    container.innerHTML = `<div class="messages-grid">${messagesHtml}</div>`;
-                } else {
-                    container.innerHTML = '<div class="no-messages">هێشتا هیچ نامەیەک نەنێردراوە</div>';
-                }
-                
-            } catch (error) {
-                console.error('Error loading messages:', error);
-                container.innerHTML = '<div class="no-messages">هەڵەیەک روویدا لە گەراندنەوەی نامەکاندا</div>';
-            }
-        }
-
-        // Load messages when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            loadMessages();
         });
     </script>
 </body>
 </html>
+
