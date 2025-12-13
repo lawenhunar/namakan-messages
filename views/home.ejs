@@ -64,7 +64,7 @@
                 
                 if (result.success && result.data.length > 0) {
                     const messagesHtml = result.data.map(message => `
-                        <div class="message-card" style="background-color: ${message.backgroundColor || '#faf8f5'};">
+                        <div class="message-card" style="background-color: ${message.backgroundColor || '#ffffff'};">
                             <div class="message-receiver">بۆ: ${message.receiverName}</div>
                             <div class="message-content">${message.content}</div>
                             <div class="message-meta">

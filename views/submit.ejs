@@ -26,9 +26,9 @@
                     <!-- Message Preview -->
                     <div class="message-preview-container">
                         <div class="message-preview-card" id="messagePreview">
-                            <div class="preview-receiver">بۆ: <span id="receiverPreview">ناوی وەرگر</span></div>
+                            <div class="preview-receiver">بۆ: <span id="receiverPreview"></span></div>
                             <div class="preview-content">
-                                <div id="contentPreview">نامەکەت لێرە بنووسە...</div>
+                                <div id="contentPreview"></div>
                             </div>
                             <div class="preview-meta">
                                 <span class="preview-date" id="previewDate">ئەمرۆ</span>
@@ -41,7 +41,7 @@
                     <div class="color-palette">
                         <h4 class="palette-title">رەنگ هەڵبژاردن</h4>
                         <div class="color-grid" id="colorGrid">
-                            <div class="color-swatch" data-color="#faf8f5" style="background-color: #faf8f5;"></div>
+                            <div class="color-swatch" data-color="#ffffff" style="background-color: #ffffff;"></div>
                             <div class="color-swatch" data-color="#ffe4e1" style="background-color: #ffe4e1;"></div>
                             <div class="color-swatch" data-color="#fff4e6" style="background-color: #fff4e6;"></div>
                             <div class="color-swatch" data-color="#fff9c4" style="background-color: #fff9c4;"></div>
@@ -63,13 +63,16 @@
                         
                         <div class="input-group">
                             <label for="content" class="input-label">ناوەرۆکی نامە</label>
-                            <textarea id="content" name="content" class="input-textarea" placeholder="نامەکەت لێرە بنووسە" required></textarea>
+                            <textarea id="content" name="content" class="input-textarea" placeholder="نامەکەت لێرە بنووسە" required maxlength="100"></textarea>
+                            <div class="word-counter">
+                                <span id="wordCount">0</span> / 100 پیت
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <form id="messageForm" style="display: none;">
-                    <input type="hidden" id="backgroundColor" name="backgroundColor" value="#faf8f5">
+                    <input type="hidden" id="backgroundColor" name="backgroundColor" value="#ffffff">
                 </form>
                 
                 <button type="button" id="submitMessage" class="submit-message-btn">نامەکەت بنێرە</button>
@@ -106,9 +109,9 @@
         const backgroundColorInput = document.getElementById('backgroundColor');
         const messagePreview = document.getElementById('messagePreview');
         
-        // Initialize with first color (faf8f5) selected as default
+        // Initialize with first color (ffffff) selected as default
         colorSwatches[0].classList.add('selected');
-        messagePreview.style.backgroundColor = '#faf8f5';
+        messagePreview.style.backgroundColor = '#ffffff';
         
         colorSwatches.forEach(swatch => {
             swatch.addEventListener('click', function() {
@@ -129,6 +132,28 @@
         const previewDate = document.getElementById('previewDate');
         previewDate.textContent = formatDate(new Date().toISOString());
 
+        // Character counting functionality
+        function countCharacters(text) {
+            return text.length;
+        }
+
+        function updateCharacterCount() {
+            const text = contentInput.value;
+            const charCount = countCharacters(text);
+            const charCountElement = document.getElementById('wordCount');
+
+            charCountElement.textContent = charCount;
+
+            // Visual feedback for character limit
+            if (charCount > 90) {
+                charCountElement.style.color = '#e74c3c'; // Red when close to limit
+            } else if (charCount > 80) {
+                charCountElement.style.color = '#f39c12'; // Orange when approaching limit
+            } else {
+                charCountElement.style.color = '#6b4423'; // Default color
+            }
+        }
+
         // Live preview updates
         const receiverNameInput = document.getElementById('receiverName');
         const contentInput = document.getElementById('content');
@@ -143,7 +168,11 @@
         contentInput.addEventListener('input', function() {
             const value = this.value.trim();
             contentPreview.textContent = value || 'نامەکەت لێرە بنووسە...';
+            updateCharacterCount();
         });
+
+        // Initialize character count
+        updateCharacterCount();
 
         // Submit message functionality
         document.getElementById('submitMessage').addEventListener('click', async function() {
@@ -157,6 +186,13 @@
             // Validate input
             if (!receiverName || !content) {
                 statusDiv.innerHTML = '<div class="error-message">❌ ناوی وەرگر و ناوەرۆکی نامە پێویستە</div>';
+                return;
+            }
+
+            // Validate character count
+            const charCount = countCharacters(content);
+            if (charCount > 100) {
+                statusDiv.innerHTML = '<div class="error-message">❌ ناوەرۆکی نامە نابێت لە ١٠٠ پیت زیاتر بێت</div>';
                 return;
             }
             
@@ -194,8 +230,8 @@
                     // Reset to default color
                     colorSwatches.forEach(s => s.classList.remove('selected'));
                     colorSwatches[0].classList.add('selected');
-                    backgroundColorInput.value = '#faf8f5';
-                    messagePreview.style.backgroundColor = '#faf8f5';
+                    backgroundColorInput.value = '#ffffff';
+                    messagePreview.style.backgroundColor = '#ffffff';
                     
                 } else {
                     statusDiv.innerHTML = '<div class="error-message">❌ ' + result.message + '</div>';
