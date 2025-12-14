@@ -1,21 +1,8 @@
 /* Font Face Declarations */
+/* Samir Regular Font - Chosen as the main font for the website */
 @font-face {
-    font-family: 'Noto Nastaliq Urdu';
-    src: url('./fonts/Noto Nastaliq Urdo v4.000/TTF/NotoNastaliqUrdu-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Noto Nastaliq Urdu';
-    src: url('./fonts/Noto Nastaliq Urdo v4.000/TTF/NotoNastaliqUrdu-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'The Bustani';
-    src: url('./fonts/The Bustani_ typeface/Monotype  - Bustani.otf') format('opentype');
+    font-family: 'Samir Regular';
+    src: url('./fonts/Samir Regular/Samir Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -23,8 +10,9 @@
 /* Font selection variable - change 'noto' to 'bustani' to switch fonts */
 :root {
     /* --message-font: 'Noto Nastaliq Urdu', 'Georgia', serif; */
-    /* Uncomment the line below and comment the line above to try The Bustani font */
-    --message-font: 'The Bustani', 'Georgia', serif;
+    /* --message-font: 'The Bustani', 'Georgia', serif; */
+    /* Using Samir Regular as the chosen font for all messages */
+    --message-font: 'Samir Regular', 'Georgia', serif;
 }
 
 * {
@@ -34,7 +22,7 @@
 }
 
 body {
-    font-family: 'The Bustani', 'Georgia', serif;
+    font-family: 'Samir Regular', 'Georgia', serif;
     background: 
         linear-gradient(135deg, rgba(218, 165, 105, 0.03) 0%, rgba(245, 222, 179, 0.05) 100%),
         repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(218, 165, 105, 0.02) 2px, rgba(218, 165, 105, 0.02) 4px),
