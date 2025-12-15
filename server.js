@@ -29,6 +29,11 @@ const messageSchema = new mongoose.Schema({
     default: "#ffffff",
     trim: true,
   },
+  textColor: {
+    type: String,
+    default: "#6b4423",
+    trim: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -65,10 +70,16 @@ app.get("/about", (req, res) => {
   });
 });
 
+app.get("/all-messages", (req, res) => {
+  res.render("all-messages", {
+    title: "نامەکان - هەموو نامەکان",
+  });
+});
+
 // API endpoint to handle message submission
 app.post("/api/messages", async (req, res) => {
   try {
-    const { receiverName, content, backgroundColor } = req.body;
+    const { receiverName, content, backgroundColor, textColor } = req.body;
 
     // Validate input
     if (!receiverName || !content) {
@@ -83,6 +94,7 @@ app.post("/api/messages", async (req, res) => {
       receiverName: receiverName.trim(),
       content: content.trim(),
       backgroundColor: backgroundColor || "#ffffff",
+      textColor: textColor || "#6b4423",
     });
 
     // Save to database
@@ -102,16 +114,39 @@ app.post("/api/messages", async (req, res) => {
   }
 });
 
-// API endpoint to retrieve messages
+// API endpoint to retrieve messages with pagination and search
 app.get("/api/messages", async (req, res) => {
   try {
-    const messages = await Message.find()
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 50;
+    const search = req.query.search || '';
+
+    const skip = (page - 1) * limit;
+
+    // Build search query
+    let searchQuery = {};
+    if (search) {
+      searchQuery = {
+        receiverName: search // Exact match search
+      };
+    }
+
+    const messages = await Message.find(searchQuery)
       .sort({ createdAt: -1 }) // Sort by newest first
-      .limit(50); // Limit to 50 most recent messages
+      .skip(skip)
+      .limit(limit);
+
+    const totalMessages = await Message.countDocuments(searchQuery);
+    const totalPages = Math.ceil(totalMessages / limit);
 
     res.json({
       success: true,
       data: messages,
+      currentPage: page,
+      totalPages: totalPages,
+      totalMessages: totalMessages,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
     });
   } catch (error) {
     console.error("Error retrieving messages:", error);

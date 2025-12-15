@@ -8,14 +8,7 @@
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <img src="/logo.png" alt="نامەکان لۆگۆ" class="logo">
-            <nav class="nav">
-                <a href="/" class="nav-link active">سەرەکی</a>
-                <a href="/submit" class="nav-link">نامە بنێرە</a>
-                <a href="/about" class="nav-link">دەربارە</a>
-            </nav>
-        </header>
+        <%- include('partials/header', { currentPage: 'home' }) %>
 
         <main class="main-content">
             <!-- Poetic Header -->
@@ -28,6 +21,11 @@
             <div class="messages-section">
                 <div id="messagesContainer">
                     <div class="loading-messages">نامەکان دەگەرێنرێنەوە...</div>
+                </div>
+
+                <!-- See All Messages Button -->
+                <div class="see-all-container">
+                    <a href="/all-messages" class="see-all-btn">هەموو نامەکان ببینە</a>
                 </div>
             </div>
         </main>
@@ -57,17 +55,17 @@
         // Function to load and display messages
         async function loadMessages() {
             const container = document.getElementById('messagesContainer');
-            
+
             try {
-                const response = await fetch('/api/messages');
+                const response = await fetch('/api/messages?limit=6');
                 const result = await response.json();
                 
                 if (result.success && result.data.length > 0) {
                     const messagesHtml = result.data.map(message => `
                         <div class="message-card" style="background-color: ${message.backgroundColor || '#ffffff'};">
-                            <div class="message-receiver">بۆ: ${message.receiverName}</div>
-                            <div class="message-content">${message.content}</div>
-                            <div class="message-meta">
+                            <div class="message-receiver" style="color: ${message.textColor || '#6b4423'};">بۆ: ${message.receiverName}</div>
+                            <div class="message-content" style="color: ${message.textColor || '#6b4423'};">${message.content}</div>
+                            <div class="message-meta" style="color: ${message.textColor || '#6b4423'};">
                                 <span class="message-date">${formatDate(message.createdAt)}</span>
                                 <span>نامەکان</span>
                             </div>

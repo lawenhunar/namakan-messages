@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <%- include('partials/header', { currentPage: 'all-messages' }) %>
+
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="poetic-header">
+                <h1 class="poetic-title">هەموو نامەکان</h1>
+                <p class="poetic-subtitle">هەموو نامە نەنێردراوەکان ببینە</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-section">
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="بەناوی وەرگر بگەڕێ..." dir="rtl">
+                    <button id="searchBtn" class="search-btn">گەڕان</button>
+                </div>
+            </div>
+
+            <!-- Messages Display Section -->
+            <div class="messages-section">
+                <div id="messagesContainer">
+                    <div class="loading-messages">نامەکان دەگەرێنرێنەوە...</div>
+                </div>
+
+                <!-- Pagination -->
+                <div id="paginationContainer" class="pagination-container" style="display: none;">
+                    <button id="prevBtn" class="pagination-btn" disabled>پێشووتر</button>
+                    <span id="pageInfo" class="page-info"></span>
+                    <button id="nextBtn" class="pagination-btn">دواتر</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <%- include('partials/footer') %>
+
+    <script>
+        // Function to convert English numbers to Kurdish/Arabic numbers
+        function toArabicNumerals(str) {
+            const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return str.replace(/\d/g, (digit) => arabicNumerals[parseInt(digit)]);
+        }
+
+        // Function to format date with Kurdish/Arabic numerals in day/month/year format
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+
+            // Format: day/month/year (e.g., "٢٢/٥/٢٠٢٥")
+            const formattedDate = `${day}/${month}/${year}`;
+            return toArabicNumerals(formattedDate);
+        }
+
+        let currentPage = 1;
+        let currentSearch = '';
+        const messagesPerPage = 18;
+
+        // Function to load and display messages
+        async function loadMessages(page = 1, search = '') {
+            const container = document.getElementById('messagesContainer');
+            const paginationContainer = document.getElementById('paginationContainer');
+
+            try {
+                const params = new URLSearchParams({
+                    page: page.toString(),
+                    limit: messagesPerPage.toString(),
+                    search: search
+                });
+
+                const response = await fetch(`/api/messages?${params}`);
+                const result = await response.json();
+
+                if (result.success && result.data.length > 0) {
+                    const messagesHtml = result.data.map(message => `
+                        <div class="message-card" style="background-color: ${message.backgroundColor || '#ffffff'};">
+                            <div class="message-receiver" style="color: ${message.textColor || '#6b4423'};">بۆ: ${message.receiverName}</div>
+                            <div class="message-content" style="color: ${message.textColor || '#6b4423'};">${message.content}</div>
+                            <div class="message-meta" style="color: ${message.textColor || '#6b4423'};">
+                                <span class="message-date">${formatDate(message.createdAt)}</span>
+                                <span>نامەکان</span>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    container.innerHTML = `<div class="messages-grid">${messagesHtml}</div>`;
+
+                    // Show pagination if there are multiple pages
+                    if (result.totalPages > 1) {
+                        paginationContainer.style.display = 'flex';
+                        document.getElementById('pageInfo').textContent = `لەپەڕە ${toArabicNumerals(page.toString())} لە ${toArabicNumerals(result.totalPages.toString())}`;
+                        document.getElementById('prevBtn').disabled = page === 1;
+                        document.getElementById('nextBtn').disabled = page === result.totalPages;
+                    } else {
+                        paginationContainer.style.display = 'none';
+                    }
+                } else {
+                    container.innerHTML = '<div class="no-messages">هیچ نامەیەک نەدۆزرایەوە</div>';
+                    paginationContainer.style.display = 'none';
+                }
+
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                container.innerHTML = '<div class="no-messages">هەڵەیەک روویدا لە گەراندنەوەی نامەکاندا</div>';
+                paginationContainer.style.display = 'none';
+            }
+        }
+
+        // Search functionality
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            currentSearch = searchInput.value.trim();
+            currentPage = 1;
+            loadMessages(currentPage, currentSearch);
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMessages(currentPage, currentSearch);
+
+            // Search button
+            document.getElementById('searchBtn').addEventListener('click', performSearch);
+
+            // Enter key in search input
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            // Pagination buttons
+            document.getElementById('prevBtn').addEventListener('click', function() {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadMessages(currentPage, currentSearch);
+                }
+            });
+
+            document.getElementById('nextBtn').addEventListener('click', function() {
+                currentPage++;
+                loadMessages(currentPage, currentSearch);
+            });
+        });
+    </script>
+</body>
+</html>
