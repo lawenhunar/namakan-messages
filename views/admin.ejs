@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        .admin-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .accept-btn, .decline-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .accept-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .accept-btn:hover {
+            background-color: #218838;
+        }
+
+        .decline-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .decline-btn:hover {
+            background-color: #c82333;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .status-pending {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        .status-accepted {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .status-rejected {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+            justify-content: center;
+            border-bottom: 2px solid #6b4423;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background-color: transparent;
+            color: #6b4423;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            background-color: #f8f5f0;
+            color: #6b4423;
+            border-bottom: 3px solid #6b4423;
+        }
+
+        .tab-btn:hover {
+            background-color: #f8f5f0;
+            color: #6b4423;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .message-actions {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            max-width: 300px;
+            word-wrap: break-word;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .notification.success {
+            background-color: #28a745;
+        }
+
+        .notification.error {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <div class="header-content">
+                <h1 class="site-title">نامەکان</h1>
+                <nav class="main-nav">
+                    <a href="/" class="nav-link">سەرەتا</a>
+                    <a href="/submit" class="nav-link">نامە بنێرە</a>
+                    <a href="/all-messages" class="nav-link">هەموو نامەکان</a>
+                    <a href="/about" class="nav-link">دەربارە</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="poetic-header">
+                <h1 class="poetic-title">بەڕێوبەرایەتی نامەکان</h1>
+                <p class="poetic-subtitle">نامە نەنێردراوەکان بەڕێوە ببە</p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="tab-buttons">
+                <button id="tabPending" class="tab-btn active">چاوەڕوانکراو</button>
+                <button id="tabAccepted" class="tab-btn">پەسەندکراو</button>
+                <button id="tabRejected" class="tab-btn">ڕەتکراو</button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div id="pendingTab" class="tab-content active">
+                <div class="messages-section">
+                    <div id="pendingContainer">
+                        <div class="loading-messages">نامە چاوەڕوانکراوەکان دەگەرێنرێنەوە...</div>
+                    </div>
+                    <div id="pendingPagination" class="pagination-container" style="display: none;">
+                        <button id="pendingPrevBtn" class="pagination-btn" disabled>پێشووتر</button>
+                        <span id="pendingPageInfo" class="page-info"></span>
+                        <button id="pendingNextBtn" class="pagination-btn">دواتر</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="acceptedTab" class="tab-content">
+                <div class="messages-section">
+                    <div id="acceptedContainer">
+                        <div class="loading-messages">نامە پەسەندکراوەکان دەگەرێنرێنەوە...</div>
+                    </div>
+                    <div id="acceptedPagination" class="pagination-container" style="display: none;">
+                        <button id="acceptedPrevBtn" class="pagination-btn" disabled>پێشووتر</button>
+                        <span id="acceptedPageInfo" class="page-info"></span>
+                        <button id="acceptedNextBtn" class="pagination-btn">دواتر</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="rejectedTab" class="tab-content">
+                <div class="messages-section">
+                    <div id="rejectedContainer">
+                        <div class="loading-messages">نامە ڕەتکراوەکان دەگەرێنرێنەوە...</div>
+                    </div>
+                    <div id="rejectedPagination" class="pagination-container" style="display: none;">
+                        <button id="rejectedPrevBtn" class="pagination-btn" disabled>پێشووتر</button>
+                        <span id="rejectedPageInfo" class="page-info"></span>
+                        <button id="rejectedNextBtn" class="pagination-btn">دواتر</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification element -->
+    <div id="notification" class="notification"></div>
+
+    <%- include('partials/footer') %>
+
+    <script>
+        // Function to convert English numbers to Kurdish/Arabic numbers
+        function toArabicNumerals(str) {
+            const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return str.replace(/\d/g, (digit) => arabicNumerals[parseInt(digit)]);
+        }
+
+        // Function to format date with Kurdish/Arabic numerals in day/month/year format
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+
+            // Format: day/month/year (e.g., "٢٢/٥/٢٠٢٥")
+            const formattedDate = `${day}/${month}/${year}`;
+            return toArabicNumerals(formattedDate);
+        }
+
+        // Function to get status display info
+        function getStatusInfo(status) {
+            switch(status) {
+                case 'pending':
+                    return { text: 'چاوەڕوانکراو', class: 'status-pending' };
+                case 'accepted':
+                    return { text: 'پەسەندکراو', class: 'status-accepted' };
+                case 'rejected':
+                    return { text: 'ڕەتکراو', class: 'status-rejected' };
+                default:
+                    return { text: 'نەزانراو', class: 'status-pending' };
+            }
+        }
+
+        let currentTab = 'pending';
+        let pendingPage = 1;
+        let acceptedPage = 1;
+        let rejectedPage = 1;
+        const messagesPerPage = 12;
+
+        // Function to show notifications
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type} show`;
+
+            // Hide after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Function to load and display messages for a specific tab
+        async function loadMessagesForTab(tab, page) {
+            const containers = {
+                pending: 'pendingContainer',
+                accepted: 'acceptedContainer',
+                rejected: 'rejectedContainer'
+            };
+            const paginationContainers = {
+                pending: 'pendingPagination',
+                accepted: 'acceptedPagination',
+                rejected: 'rejectedPagination'
+            };
+            const pageInfos = {
+                pending: 'pendingPageInfo',
+                accepted: 'acceptedPageInfo',
+                rejected: 'rejectedPageInfo'
+            };
+            const prevBtns = {
+                pending: 'pendingPrevBtn',
+                accepted: 'acceptedPrevBtn',
+                rejected: 'rejectedPrevBtn'
+            };
+            const nextBtns = {
+                pending: 'pendingNextBtn',
+                accepted: 'acceptedNextBtn',
+                rejected: 'rejectedNextBtn'
+            };
+
+            const container = document.getElementById(containers[tab]);
+            const paginationContainer = document.getElementById(paginationContainers[tab]);
+
+            try {
+                const params = new URLSearchParams({
+                    page: page.toString(),
+                    limit: messagesPerPage.toString(),
+                    status: tab
+                });
+
+                const response = await fetch(`/api/admin/messages?${params}`);
+                const result = await response.json();
+
+                if (result.success && result.data.length > 0) {
+                    const messagesHtml = result.data.map(message => {
+                        const statusInfo = getStatusInfo(message.status);
+                        const canAccept = message.status === 'pending';
+                        const canReject = message.status === 'accepted' || message.status === 'pending';
+                        const canRevert = message.status === 'rejected';
+
+                        return `
+                            <div class="message-card" style="background-color: ${message.backgroundColor || '#ffffff'};">
+                                <div class="status-badge ${statusInfo.class}">${statusInfo.text}</div>
+                                <div class="message-receiver" style="color: ${message.textColor || '#6b4423'};">بۆ: ${message.receiverName}</div>
+                                <div class="message-content" style="color: ${message.textColor || '#6b4423'};">${message.content}</div>
+                                <div class="message-meta" style="color: ${message.textColor || '#6b4423'};">
+                                    <span class="message-date">${formatDate(message.createdAt)}</span>
+                                </div>
+                                <div class="admin-controls">
+                                    ${canAccept ? `<button class="accept-btn" onclick="acceptMessage('${message._id}')">پەسەند کردن</button>` : ''}
+                                    ${canRevert ? `<button class="accept-btn" onclick="acceptMessage('${message._id}')">پەسەند کردن</button>` : ''}
+                                    ${canReject ? `<button class="decline-btn" onclick="rejectMessage('${message._id}')">ڕەت کردن</button>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    container.innerHTML = `<div class="messages-grid">${messagesHtml}</div>`;
+
+                    // Show pagination if there are multiple pages
+                    if (result.totalPages > 1) {
+                        paginationContainer.style.display = 'flex';
+                        document.getElementById(pageInfos[tab]).textContent = `لەپەڕە ${toArabicNumerals(page.toString())} لە ${toArabicNumerals(result.totalPages.toString())}`;
+                        document.getElementById(prevBtns[tab]).disabled = page === 1;
+                        document.getElementById(nextBtns[tab]).disabled = page === result.totalPages;
+                    } else {
+                        paginationContainer.style.display = 'none';
+                    }
+                } else {
+                    container.innerHTML = '<div class="no-messages">هیچ نامەیەک نەدۆزرایەوە</div>';
+                    paginationContainer.style.display = 'none';
+                }
+
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                container.innerHTML = '<div class="no-messages">هەڵەیەک روویدا لە گەراندنەوەی نامەکاندا</div>';
+                paginationContainer.style.display = 'none';
+            }
+        }
+
+        // Accept message
+        async function acceptMessage(messageId) {
+            try {
+                const response = await fetch(`/api/admin/messages/${messageId}/accept`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showNotification('نامە بە سەرکەوتوویی پەسەند کرا');
+                    // Reload current tab
+                    loadMessagesForTab('pending', pendingPage);
+                } else {
+                    showNotification('هەڵەیەک روویدا: ' + result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error accepting message:', error);
+                showNotification('هەڵەیەک روویدا لە پەسەندکردنی نامەدا', 'error');
+            }
+        }
+
+        // Switch tab
+        function switchTab(tabName) {
+            // Update active tab button
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`).classList.add('active');
+
+            // Update active tab content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${tabName}Tab`).classList.add('active');
+
+            currentTab = tabName;
+
+            // Load messages for the selected tab
+            switch(tabName) {
+                case 'pending':
+                    loadMessagesForTab('pending', pendingPage);
+                    break;
+                case 'accepted':
+                    loadMessagesForTab('accepted', acceptedPage);
+                    break;
+                case 'rejected':
+                    loadMessagesForTab('rejected', rejectedPage);
+                    break;
+            }
+        }
+
+        // Reject message
+        async function rejectMessage(messageId) {
+
+            try {
+                const response = await fetch(`/api/admin/messages/${messageId}/reject`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showNotification('نامە بە سەرکەوتوویی ڕەت کرا');
+                    // Reload current tab
+                    switch(currentTab) {
+                        case 'pending':
+                            loadMessagesForTab('pending', pendingPage);
+                            break;
+                        case 'accepted':
+                            loadMessagesForTab('accepted', acceptedPage);
+                            break;
+                        case 'rejected':
+                            loadMessagesForTab('rejected', rejectedPage);
+                            break;
+                    }
+                } else {
+                    showNotification('هەڵەیەک روویدا: ' + result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error rejecting message:', error);
+                showNotification('هەڵەیەک روویدا لە ڕەتکردنی نامەدا', 'error');
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load initial tab
+            switchTab('pending');
+
+            // Tab buttons
+            document.getElementById('tabPending').addEventListener('click', () => switchTab('pending'));
+            document.getElementById('tabAccepted').addEventListener('click', () => switchTab('accepted'));
+            document.getElementById('tabRejected').addEventListener('click', () => switchTab('rejected'));
+
+            // Pagination buttons for pending tab
+            document.getElementById('pendingPrevBtn').addEventListener('click', function() {
+                if (pendingPage > 1) {
+                    pendingPage--;
+                    loadMessagesForTab('pending', pendingPage);
+                }
+            });
+
+            document.getElementById('pendingNextBtn').addEventListener('click', function() {
+                pendingPage++;
+                loadMessagesForTab('pending', pendingPage);
+            });
+
+            // Pagination buttons for accepted tab
+            document.getElementById('acceptedPrevBtn').addEventListener('click', function() {
+                if (acceptedPage > 1) {
+                    acceptedPage--;
+                    loadMessagesForTab('accepted', acceptedPage);
+                }
+            });
+
+            document.getElementById('acceptedNextBtn').addEventListener('click', function() {
+                acceptedPage++;
+                loadMessagesForTab('accepted', acceptedPage);
+            });
+
+            // Pagination buttons for rejected tab
+            document.getElementById('rejectedPrevBtn').addEventListener('click', function() {
+                if (rejectedPage > 1) {
+                    rejectedPage--;
+                    loadMessagesForTab('rejected', rejectedPage);
+                }
+            });
+
+            document.getElementById('rejectedNextBtn').addEventListener('click', function() {
+                rejectedPage++;
+                loadMessagesForTab('rejected', rejectedPage);
+            });
+        });
+    </script>
+</body>
+</html>
